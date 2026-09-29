@@ -39,7 +39,8 @@ COPY --from=build /app /app
 COPY docker/api-entrypoint.sh /entrypoint.sh
 
 # Conversations, the SQLite database and backups live here, on a volume.
-RUN mkdir -p /data && chown telagent:telagent /data /app
+RUN mkdir -p /data && chown telagent:telagent /data /app \
+    && ln -s /data/var /app/var
 VOLUME /data
 
 USER telagent

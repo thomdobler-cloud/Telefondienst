@@ -1,0 +1,20 @@
+{
+    auto_https off
+    admin off
+}
+
+:{$PORT:8080} {
+    encode zstd gzip
+    header Strict-Transport-Security "max-age=31536000"
+
+    @api path /api /api/* /public /public/* /widget /widget/* /embed.js /mcp /health /docs /docs/* /redoc /openapi.json
+    handle @api {
+        reverse_proxy api.railway.internal:38472 {
+            header_up X-Forwarded-Proto https
+            flush_interval -1
+        }
+    }
+    handle {
+        reverse_proxy web.railway.internal:38471
+    }
+}
