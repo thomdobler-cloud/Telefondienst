@@ -5,6 +5,15 @@
 # that is the entry point that honours BIND_HOST and warns when it is widened.
 set -e
 
+# Railway volumes are mounted as root. Prepare only the application data paths,
+# then drop privileges before migrations and request handling.
+if [ "$(id -u)" = "0" ]; then
+    mkdir -p /data/var
+    chown telagent:telagent /data /data/var
+    exec runuser -u telagent -- sh /entrypoint.sh
+fi
+mkdir -p /data/var
+
 echo "applying database migrations"
 # Retried, because the postgres profile starts the database beside this container
 # and it may still be coming up. Ten failures in a row is a real fault; say so.

@@ -39,8 +39,9 @@ COPY --from=build /app /app
 COPY docker/api-entrypoint.sh /entrypoint.sh
 
 # Conversations, the SQLite database and backups live here, on a volume.
-RUN mkdir -p /data && chown telagent:telagent /data /app
-VOLUME /data
+RUN mkdir -p /data && chown telagent:telagent /data /app \
+    && ln -s /data/var /app/var
+# Storage is mounted explicitly by Compose or Railway; Railway rejects VOLUME.
 
 USER telagent
 
