@@ -18,7 +18,7 @@ On Railway set RAILWAY_RUN_UID=0 for the API volume initialization; the entrypoi
 immediately drops to the existing telagent user before migrations and serving.
 
 API variables: ENVIRONMENT=production, DATABASE_URL=sqlite+aiosqlite:////data/tel-agent.db,
-BIND_HOST=0.0.0.0, BIND_PORT=38472, ENCRYPTION_KEY (random 64-character hex),
+BIND_HOST=0.0.0.0, BIND_PORT=38472, PORT=38472, ENCRYPTION_KEY (random 64-character hex),
 CORS_ORIGINS and PUBLIC_BASE_URL (the gateway HTTPS origin),
 TRUSTED_HOSTS (gateway hostname, api.railway.internal, healthcheck.railway.app,
 localhost,127.0.0.1), HSTS_SECONDS=31536000, TZ=Europe/Berlin.
